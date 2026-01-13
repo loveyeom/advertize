@@ -3,109 +3,158 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KN News - 임상모집</title>
+    <title>KN News - 종합 뉴스</title>
     <style>
-        /* 기본 스타일 초기화 */
+        /* 기본 스타일 */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; background-color: #f4f4f4; color: #333; line-height: 1.6; }
+        body { font-family: 'Malgun Gothic', sans-serif; background-color: #f9f9f9; color: #222; }
+        a { text-decoration: none; color: inherit; }
 
-        /* 헤더 스타일 */
+        /* 헤더 */
         header {
             background-color: #fff;
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
-            border-bottom: 2px solid #000;
+            border-bottom: 3px solid #000;
         }
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: bold;
-            letter-spacing: -1px;
-        }
+        header h1 { font-size: 3rem; font-weight: 900; letter-spacing: -2px; cursor: pointer; }
 
-        /* 메인 광고 배너 스타일 */
-        .banner-container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
+        /* 메인 컨테이너 */
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
 
-        .ad-banner {
-            background-color: #e31e24; /* 강조를 위한 붉은색 */
-            color: white;
+        /* 상단 중앙 광고 배너 영역 */
+        .top-ad-area {
             text-align: center;
-            padding: 40px 20px;
+            margin-bottom: 40px;
+        }
+        .main-banner {
+            width: 100%;
+            max-width: 970px;
+            height: auto;
+            min-height: 150px;
+            background-color: #eee;
+            border: 1px solid #ddd;
+            display: inline-block;
             cursor: pointer;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            overflow: hidden;
+            border-radius: 4px;
         }
-        .ad-banner:hover { transform: scale(1.02); }
-        .ad-banner h2 { font-size: 1.8rem; word-break: keep-all; }
+        /* 사용자가 이미지를 넣었을 때 보일 스타일 */
+        .main-banner img { width: 100%; display: block; }
+        .banner-placeholder { padding: 40px; color: #666; font-size: 1.5rem; font-weight: bold; }
 
-        /* 클릭 시 나타날 상세 내용 공간 */
+        /* 클릭 시 나타날 영상 영역 */
         #content-area {
-            display: none; /* 초기에는 숨김 */
-            margin-top: 20px;
+            display: none;
             background: #fff;
             padding: 20px;
+            border: 2px solid #e31e24;
+            margin-bottom: 30px;
             border-radius: 8px;
         }
-
-        /* 유튜브 반응형 컨테이너 */
         .video-container {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 비율 */
+            padding-bottom: 56.25%;
             height: 0;
-            overflow: hidden;
             margin-bottom: 20px;
         }
         .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
         }
 
-        /* 광고 이미지 스타일 */
-        .ad-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 5px;
+        /* 뉴스 그리드 섹션 */
+        .news-section-title {
+            font-size: 1.5rem;
+            border-left: 5px solid #000;
+            padding-left: 10px;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .news-card {
+            background: #fff;
+            border: 1px solid #eee;
+            transition: 0.3s;
+        }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .news-thumb {
+            width: 100%;
+            height: 180px;
+            background-color: #ddd;
+        }
+        .news-body { padding: 15px; }
+        .news-category { color: #e31e24; font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; }
+        .news-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 10px; line-height: 1.4; }
+        .news-desc { font-size: 0.9rem; color: #666; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 
-        /* 반응형 폰트 조절 */
+        /* 반응형 모바일 전용 */
         @media (max-width: 600px) {
-            header h1 { font-size: 1.8rem; }
-            .ad-banner h2 { font-size: 1.4rem; }
+            header h1 { font-size: 2rem; }
+            .banner-placeholder { font-size: 1.1rem; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <header onclick="location.reload()">
         <h1>KN News</h1>
     </header>
 
-    <div class="banner-container">
-        <div class="ad-banner" onclick="showContent()">
-            <h2>"심장-휴대폰 동기화 임상모집중"</h2>
-            <p style="margin-top: 10px; font-size: 0.9rem;">(상세 내용을 보려면 클릭하세요)</p>
+    <div class="container">
+        <div class="top-ad-area">
+            <div class="main-banner" onclick="showContent()">
+                <div class="banner-placeholder">
+                    "심장-휴대폰 동기화 임상모집중" <br>
+                    <span style="font-size: 0.8rem; color: #999;">(여기에 직접 만든 배너 이미지를 넣으세요)</span>
+                </div>
+            </div>
         </div>
 
         <div id="content-area">
             <div class="video-container">
-                <iframe id="youtube-video" 
-                    src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" 
-                    title="YouTube video player" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-                </iframe>
+                <iframe id="youtube-video" src="" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
+            <img src="https://via.placeholder.com/1000x500?text=Ad+Detail+Image" alt="광고 상세 내용" style="width:100%; height:auto;" id="main-ad-img">
+        </div>
 
-            <img src="https://via.placeholder.com/800x400?text=Ad+Image+Here" alt="광고 이미지" class="ad-image" id="main-ad-img">
+        <h2 class="news-section-title">주요 뉴스</h2>
+        <div class="news-grid">
+            <div class="news-card">
+                <div class="news-thumb" style="background: url('https://via.placeholder.com/400x200?text=Tech+News') center/cover;"></div>
+                <div class="news-body">
+                    <div class="news-category">IT/과학</div>
+                    <div class="news-title">AI가 바꾸는 영상 제작의 미래... "누구나 감독이 되는 시대"</div>
+                    <div class="news-desc">최근 AI 비디오 생성 기술의 발전으로 1인 제작 환경이 급변하고 있습니다. 전문가들은 향후 5년 내...</div>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-thumb" style="background: url('https://via.placeholder.com/400x200?text=Film+News') center/cover;"></div>
+                <div class="news-body">
+                    <div class="news-category">문화</div>
+                    <div class="news-title">제2회 WAIFF AI 영화제 개최 소식... 전 세계 창작자들 집결</div>
+                    <div class="news-desc">AI 툴을 활용한 혁신적인 영상물들을 선보이는 이번 영화제는 서울에서 화려한 막을 올릴 예정입니다.</div>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-thumb" style="background: url('https://via.placeholder.com/400x200?text=PC+News') center/cover;"></div>
+                <div class="news-body">
+                    <div class="news-category">경제</div>
+                    <div class="news-title">고성능 PC 부품 시장 활황, "영상 편집 수요 폭발적 증가"</div>
+                    <div class="news-desc">RTX 3060 등 고성능 그래픽 카드를 찾는 개인 창작자들이 늘어나면서 중고 및 신품 시장이...</div>
+                </div>
+            </div>
+            <div class="news-card">
+                <div class="news-thumb" style="background: url('https://via.placeholder.com/400x200?text=Medical+News') center/cover;"></div>
+                <div class="news-body">
+                    <div class="news-category">건강</div>
+                    <div class="news-title">최신 임상 연구의 현황... 환자 맞춤형 치료의 시대 열려</div>
+                    <div class="news-desc">모바일 기기와 생체 데이터를 동기화하는 새로운 형태의 임상 연구가 주목받고 있습니다.</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -114,21 +163,17 @@
             const contentArea = document.getElementById('content-area');
             const video = document.getElementById('youtube-video');
             
-            // 영역 표시
             contentArea.style.display = 'block';
 
-            // 유튜브 자동 재생 처리 (주소 끝에 autoplay 파라미터 추가)
-            // 실제 주소로 교체할 때도 아래 형식을 유지해주세요.
-            let videoSrc = "https://www.youtube.com/embed/dQw4w9WgXcQ"; // <-- 여기에 나중에 주소 넣기
+            // 여기에 본인의 유튜브 embed 주소를 넣으세요
+            let videoSrc = "https://www.youtube.com/embed/dQw4w9WgXcQ"; 
             video.src = videoSrc + "?autoplay=1&mute=1";
             
-            // 클릭 후 부드럽게 아래로 스크롤
             window.scrollTo({
                 top: contentArea.offsetTop - 20,
                 behavior: 'smooth'
             });
         }
     </script>
-
 </body>
 </html>
